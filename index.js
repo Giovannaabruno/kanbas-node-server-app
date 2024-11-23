@@ -14,7 +14,7 @@ const app = express();
 
 app.use(cors({
   credentials: true,
-  origin: process.env.NETLIFY_URL || "http://localhost:3001",
+  origin: process.env.NETLIFY_URL ||  "https://a4--kanbasreactwebapp-giovanna.netlify.app"
 })
 
 );  
