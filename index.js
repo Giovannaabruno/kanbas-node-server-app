@@ -12,8 +12,11 @@ import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 import MongoStore from 'connect-mongo'
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING ||
-  "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
-mongoose.connect(CONNECTION_STRING);
+  "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/kanbas?retryWrites=true&w=majority&appName=kanbas"
+mongoose.connect(CONNECTION_STRING, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const app = express();
 app.use(cors({
