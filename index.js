@@ -16,7 +16,7 @@ mongoose.connect(CONNECTION_STRING);
 const app = express();
 app.use(cors({
   credentials: true,
-  origin: NETLIFY_URL || "https://a6--kanbasreactwebapp-giovanna.netlify.app"
+  origin: process.env.NETLIFY_URL || "https://a6--kanbasreactwebapp-giovanna.netlify.app"
 })
 
 );
