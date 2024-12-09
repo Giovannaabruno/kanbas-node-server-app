@@ -10,10 +10,11 @@ import CourseRoutes from "./Kanbas/Courses/routes.js";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
-import MongoDBStore from 'connect-mongodb-session'
+import MongoStore from 'connect-mongo'
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING ||
   "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
 mongoose.connect(CONNECTION_STRING);
+
 const app = express();
 app.use(cors({
   credentials: true,
@@ -21,19 +22,26 @@ app.use(cors({
 })
 
 );
-const store = new MongoDBStore({
-  uri: process.env.CONNECTION_STRING ||
-    "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
-  , collections: 'sessions',
-});
+// const store = new MongoDBStore({
+//   uri: process.env.MONGO_CONNECTION_STRING ||
+//     "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+//   , collections: 'sessions',
+// });
+// store.on("error", (error)=>{
+//   console.log("error", error)
+// })
 
 app.use(express.json());
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
-  saveUninitialized: true,
-  store,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_CONNECTION_STRING ||
+    "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+ 
+  }),
 };
 
 if (process.env.NODE_ENV !== "development") {
