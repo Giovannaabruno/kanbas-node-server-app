@@ -42,7 +42,7 @@ const sessionOptions = {
   saveUninitialized: false,
   store: MongoStore.create({
     mongoUrl: process.env.MONGO_CONNECTION_STRING ||
-    "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+    "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/kanbas?retryWrites=true&w=majority&appName=kanbas"
  
   }),
 };
