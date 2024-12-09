@@ -10,8 +10,9 @@ import CourseRoutes from "./Kanbas/Courses/routes.js";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
+import MongoDBStore from 'connect-mongodb-session'
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING ||
- "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+  "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
 mongoose.connect(CONNECTION_STRING);
 const app = express();
 app.use(cors({
@@ -20,6 +21,11 @@ app.use(cors({
 })
 
 );
+const store = new MongoDBStore({
+  uri: process.env.CONNECTION_STRING ||
+    "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+  , collections: 'sessions',
+});
 
 app.use(express.json());
 
@@ -27,6 +33,7 @@ const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
   saveUninitialized: true,
+  store,
 };
 
 if (process.env.NODE_ENV !== "development") {
