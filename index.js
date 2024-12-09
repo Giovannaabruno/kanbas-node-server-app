@@ -1,6 +1,7 @@
 import "dotenv/config";
 import session from "express-session";
 import express from 'express';
+import mongoose from "mongoose";
 import Hello from "./Hello.js"
 import Lab5 from "./Lab5/index.js";
 import cors from "cors";
@@ -9,22 +10,22 @@ import CourseRoutes from "./Kanbas/Courses/routes.js";
 import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
+const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || "mongodb+srv://giovannaabruno:GB919jet@kanbas.71bny.mongodb.net/?retryWrites=true&w=majority&appName=kanbas"
+mongoose.connect(CONNECTION_STRING);
 const app = express();
-
-
 app.use(cors({
   credentials: true,
-  origin: "https://a4--kanbasreactwebapp-giovanna.netlify.app"
+  origin: "http://localhost:3000"
 })
 
-);  
+);
 
 app.use(express.json());
 
 const sessionOptions = {
   secret: process.env.SESSION_SECRET || "kanbas",
   resave: false,
-  saveUninitialized: false,
+  saveUninitialized: true,
 };
 
 if (process.env.NODE_ENV !== "development") {
